@@ -12,7 +12,18 @@ function App() {
   const [studentName, setStudentName] = useState("");
   const [studentCode, setStudentCode] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState([
+    {
+      studentName: "Nguyen Van A",
+      studentCode: "CODE12345",
+      isChecked: true,
+    },
+    {
+      studentName: "Tran Van B",
+      studentCode: "CODE67890",
+      isChecked: false,
+    },
+  ]);
   const [isCheckedItem, setCheckedItem] = useState([]);
 
   const value = {
