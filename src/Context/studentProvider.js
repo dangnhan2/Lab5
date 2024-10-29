@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { useState } from "react";
+import { getStudent } from "../service/student";
 const StudentContext = createContext();
 function StudentProvider({ children }) {
   const [name, setStudentName] = useState("");
@@ -26,6 +27,13 @@ function StudentProvider({ children }) {
     console.log(isCheckedItem);
   };
 
+  const getStudentFromAPI = async () => {
+    let res = await getStudent();
+    if (res && res.data.data) {
+      setStudents(res.data.data);
+    }
+  };
+
   return (
     <StudentContext.Provider
       value={{
@@ -41,6 +49,7 @@ function StudentProvider({ children }) {
         setCheckedItem,
         handleCheckedItem,
         handleDeleteSelected,
+        getStudentFromAPI,
       }}
     >
       {children}

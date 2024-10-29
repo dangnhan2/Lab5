@@ -19,6 +19,7 @@ function App() {
               </Container>
             }
           />
+          <Route path="/student/:id" element={<StudentInfo />} />
         </Routes>
       </div>
     </>

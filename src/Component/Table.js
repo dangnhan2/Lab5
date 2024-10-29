@@ -1,20 +1,26 @@
 import { useContext, useEffect } from "react";
 import { StudentContext } from "../Context/studentProvider";
-import { Row, Button, Form, Table, Nav } from "react-bootstrap";
-import { getStudent } from "../service/student";
+import { Row, Button, Form, Table } from "react-bootstrap";
+import { getStudent, deleteStudent } from "../service/student";
 import { useNavigate } from "react-router-dom";
 const TableStudent = () => {
-  const navigate = useNavigate();
   const {
     students,
-    setStudents,
     isCheckedItem,
     setCheckedItem,
     handleCheckedItem,
+    getStudentFromAPI,
   } = useContext(StudentContext);
 
-  const handleDelete = (studentIndex) => {
-    setStudents(students.filter((student, index) => index !== studentIndex));
+  const navigate = useNavigate();
+
+  const handleDelete = async (studentIndex) => {
+    // setStudents(students.filter((student, index) => index !== studentIndex));
+    let res = await deleteStudent(studentIndex);
+    // console.log(res);
+    if (res && res.status === 200) {
+      getStudentFromAPI();
+    }
   };
 
   useEffect(() => {
@@ -25,12 +31,6 @@ const TableStudent = () => {
     getStudentFromAPI();
   }, []);
 
-  const getStudentFromAPI = async () => {
-    let res = await getStudent();
-    if (res && res.data.data) {
-      setStudents(res.data.data);
-    }
-  };
   return (
     <Row>
       <Table striped bordered hover>
@@ -54,7 +54,9 @@ const TableStudent = () => {
                   onChange={() => handleCheckedItem(index)}
                 />
               </td>
-              <td>{student.name}</td>
+              <td onClick={() => navigate(`/student/${student._id}`)}>
+                {student.name}
+              </td>
               <td>{student.studentCode}</td>
               <td>
                 {student.isActive ? (
@@ -64,7 +66,10 @@ const TableStudent = () => {
                 )}
               </td>
               <td>
-                <Button variant="danger" onClick={() => handleDelete(index)}>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDelete(student._id)}
+                >
                   Delete
                 </Button>
               </td>

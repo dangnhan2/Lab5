@@ -10,29 +10,33 @@ const Input = () => {
     setStudentCode,
     isActive,
     setChecked,
-    students,
     setStudents,
     isCheckedItem,
     handleDeleteSelected,
+    getStudentFromAPI,
   } = useContext(StudentContext);
 
   const handleCheck = () => {
     setChecked(!isActive);
   };
 
-  const value = {
-    name,
-    studentCode,
-    isActive,
-  };
-
   const handleAdd = async () => {
-    let res = await postStudent(name, studentCode, isActive);
-    console.log(res);
-    // setStudents([res]);
-    // setStudentName("");
-    // setStudentCode("");
-    // setChecked(false);
+    try {
+      let res = await postStudent(name, studentCode, isActive);
+      if (res && res.status === 201) {
+        setStudents([res]);
+        getStudentFromAPI();
+        setStudentName("");
+        setStudentCode("");
+        setChecked(false);
+      }
+    } catch (error) {
+      console.error(
+        "Error adding student:",
+
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   const countCheckedCheckboxes = () => {
