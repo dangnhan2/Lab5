@@ -61,14 +61,10 @@ const StudentInfo = () => {
         <strong>Status:</strong> {student.isActive ? "Active" : "In-active"}
       </p>
 
-      <Button
-        variant="primary"
-        onClick={() => setShowModal(true)}
-        className="mx-2"
-      >
+      <Button variant="primary" onClick={() => setShowModal(true)}>
         Update Student
       </Button>
-      <Button variant="warning" onClick={handleGoBack}>
+      <Button variant="warning" onClick={handleGoBack} className="ms-2">
         Go Back
       </Button>
 

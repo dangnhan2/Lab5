@@ -3,6 +3,7 @@ import { StudentContext } from "../Context/studentProvider";
 import { Row, Button, Form, Table } from "react-bootstrap";
 import { getStudent, deleteStudent } from "../service/student";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const TableStudent = () => {
   const {
     students,
@@ -55,7 +56,7 @@ const TableStudent = () => {
                 />
               </td>
               <td onClick={() => navigate(`/student/${student._id}`)}>
-                {student.name}
+                <Link>{student.name}</Link>
               </td>
               <td>{student.studentCode}</td>
               <td>
